@@ -1,0 +1,74 @@
+@import '../../node_modules/view-design/src/styles/index.less';
+//
+@table-thead-bg               :  #5cadff;
+@table-td-stripe-bg           : #f1f9ed;
+@table-td-hover-bg            : #dfffdd;
+@table-td-highlight-bg        : #ecf9d8;
+
+@layout-header-background    : #ffffff;
+@layout-header-height        : 64px;
+@layout-header-padding       : 0 0px;
+@layout-footer-padding       : 10px 50px;
+@layout-footer-background    : @layout-body-background;
+@layout-sider-background     : @layout-header-background;
+
+
+// Background color
+@background-color-base        : #f7f7f7;  // base
+@background-color-select-hover: @input-disabled-bg;
+@tooltip-bg                   : rgba(70, 76, 91, .9);
+@head-bg                      : #f9fafc;
+@table-thead-bg               : #f8f8f9;
+@table-td-stripe-bg           : #f8f8f9;
+@table-td-hover-bg            : #ebf7ff;
+@table-td-highlight-bg        : #ebf7ff;
+@menu-dark-title              : @black;
+@menu-dark-active-bg          : @black;
+@menu-dark-subsidiary-color   : @gold-6;
+@menu-dark-group-title-color  : rgba(255,255,255,.36);
+@date-picker-cell-hover-bg    : #e1f0fe;
+.@{table-prefix-cls}{
+
+   th {
+     //font-size: @font-size-base;
+     background:@primary-color  ;
+     color:@white;
+     font-size: @font-size-base ;
+    }
+  tr{
+    border-radius: 10px;
+    cursor:pointer;
+  }
+  td{
+    padding:0 0;
+  }
+}
+.@{menu-prefix-cls} {
+  &-dark&-horizontal &-item, &-dark&-horizontal &-submenu {
+    color: @menu-dark-subsidiary-color;
+    &-active, &:hover {
+      color: @gold-4;
+      border-bottom:2px solid @orange-6;
+    }
+  }
+   &-item{
+        display: block;
+        outline: none;
+        list-style: none;
+        font-size: @font-size-large;
+        position: relative;
+        z-index: 1;
+        cursor: pointer;
+        transition: all @transition-time @ease-in-out;
+    }
+  &-light&-horizontal &-item, &-light&-horizontal &-submenu{
+        height: inherit;
+        line-height: inherit;
+        border-bottom: 2px solid transparent;
+        color: @text-color;
+        &-active, &:hover{
+            color: @primary-color;
+            border-bottom: 12px solid @white;
+        }
+    }
+}
