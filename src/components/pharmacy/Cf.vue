@@ -28,7 +28,7 @@
       <a-tab-pane key="1" tab="处方明细表">
         <a-table :columns="columns" :data-source="data"  bordered  size="small" rowKey="opertime" :expandRowByClick="true"
                :pagination="pagination" @change="handleTableChange" :scroll="{y:350}"  @expand="expandInner">
-           <a-table style="background:lightgray"
+           <a-table style="background:lightgoldenrodyellow"
          slot="expandedRowRender" bordered size="small"
          :columns="innerColumns"
           :data-source="innerData"
@@ -38,16 +38,21 @@
 
        </a-table>
       </a-tab-pane>
-      <a-tab-pane key="2" tab="统计明细表(按费别)" force-render style="background: whitesmoke;text-align: center;">
+      <a-tab-pane key="2" tab="统计明细表" force-render style="background: whitesmoke;text-align: center;">
+        选择分组依据:
+        <a-radio-group v-model="currentGroup" v-for="(item,index) in groupData "
+                       :key="index" name="radioGroup" buttonStyle="solid">
+        <a-radio-button :value="item.name" :checked="index==0">
+          {{item.label}}
+        </a-radio-button>
+
+      </a-radio-group>
           <a-table :columns="tjcols" :data-source="tongji" :scroll="{y:350}" size="small" :pagination="false">
           </a-table>
       </a-tab-pane>
 
     </a-tabs>
     </a-page-header>
-
-
-
   </div>
 </template>
 
@@ -80,7 +85,7 @@ import CfheadColumn from '../../DefColumn/CfheadColumn'
                 return `${range[0]}至${range[1]}，共 ${total} 条记录数`;
           }
             },
-            fytime:[moment().startOf('day'),moment().endOf('day')],
+            fytime:[moment().startOf('month'),moment().endOf('day')],
             filter:{
               doctor:'',
               patient:'',
@@ -113,7 +118,26 @@ import CfheadColumn from '../../DefColumn/CfheadColumn'
               {title:'单位',key:'unit',dataIndex:'unit',width:50},
 
             ],
-            innerData:[]
+            innerData:[],
+            groupData:[
+              {name:'doctor',label:'医生',groupFn(item){return item.doctor}},
+              {name:'opertimeByDay',label:'日期(按日)',groupFn(item){return item.opertime.substr(0,10)}},
+              {name:'opertimeByMonth',label:'日期(按月)',groupFn(item){return item.opertime.substr(0,7)}},
+              {name:'department',label:'科室',groupFn(item){return item.department}},
+               {name:'gender',label:'性别',groupFn(item){return item.gender}},
+              {name:'totalprice',label:'处方金额',groupFn(item){
+                let price = item.totalprice;
+                if(price <=50){
+                  return '<=50元'
+                }else if(price >50 && price <=100){
+                  return '50至100元'
+                }else{
+                  return '>100元'
+                }
+              }},
+
+            ],
+            currentGroup: 'doctor'
           }
         },
         mounted(){
@@ -123,6 +147,12 @@ import CfheadColumn from '../../DefColumn/CfheadColumn'
           this.tjcols.forEach(item=>item.align='center')
 
         },
+      watch:{
+          currentGroup:function(){
+            console.log(this.currentGroup)
+            this.groupByCustome();
+          }
+      },
       methods:{
           query(){
             this.pagination.current=1;
@@ -134,15 +164,17 @@ import CfheadColumn from '../../DefColumn/CfheadColumn'
             this.axios.get("/springDemo/api/CfHead.do",{params:this.filter})
               .then(response=>{
                 this.data=response.data;
-                this.groupByDoctor();
+                this.groupByCustome();
               })
           },
+
           handleTableChange(pagination){
             this.pagination.current=pagination.current;
           },
-          groupByDoctor(){
-
-            this.tongji =this._.chain(this.data).groupBy('doctor').map((val,key,obj)=>{
+          groupByCustome(){
+            let current = this._.find(this.groupData,x=>x.name==this.currentGroup);
+            console.log(current)
+            this.tongji =this._.chain(this.data).groupBy(item=>current.groupFn(item)).map((val,key,obj)=>{
               let feibie = this._.countBy(val,'feibie')
               let leixing =this._.countBy(val,'cftype')
               let totalprice = this.$accounting.formatMoney(this._.sumBy(val,'totalprice'),"￥",2,',','.');
@@ -154,8 +186,12 @@ import CfheadColumn from '../../DefColumn/CfheadColumn'
                   yongfa['静滴']++;
                 }
               })
-              return this._.defaults({'医生':key},feibie,leixing,{'金额':totalprice},{'人次':renci},{'处方数':cfcount},yongfa)
-            }).orderBy('医生').value();
+              let cur = current.label;
+              this.tjcols[0].title=cur;
+              this.tjcols[0].label=cur;
+              this.tjcols[0].dataIndex=cur;
+              return this._.defaults({[cur]:key},feibie,leixing,{'金额':totalprice},{'人次':renci},{'处方数':cfcount},yongfa)
+            }).value();
               console.log(this.tongji)
           },
         expandInner(expanded,record){
