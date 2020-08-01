@@ -40,7 +40,7 @@
       </a-tab-pane>
       <a-tab-pane key="2" tab="统计明细表" force-render style="background: whitesmoke;text-align: center;">
         选择分组依据:
-        <a-radio-group v-model="currentGroup" v-for="(item,index) in groupData "
+        <a-radio-group v-model="currentGroup" v-for="(item,index) in groupData " style="padding:5px;"
                        :key="index" name="radioGroup" buttonStyle="solid">
         <a-radio-button :value="item.name" :checked="index==0">
           {{item.label}}
