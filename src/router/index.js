@@ -8,10 +8,12 @@ const Pharmacy =()=>import('@/components/Pharmacy')
 const HelloWorld = ()=> import('@/components/pharmacy/HelloWorld')
 const Drug =()=>import('@/components/pharmacy/Drug')
 const Cf =()=>import('@/components/pharmacy/Cf')
+const Employee=()=>import('@/components/pharmacy/Employee')
 const Util=()=>import('@/components/Util')
 
 const Article=()=>import('@/components/pharmacy/Article')
 const About=()=>import('@/components/About')
+
 const routes=[
   {
     path:'/home',
@@ -50,6 +52,14 @@ const routes=[
       component: Cf,
       meta:{
         title:'处方明细'
+      }
+    },
+       {
+      path: '/Employee',
+      name: 'employee',
+      component: Employee,
+      meta:{
+        title:'职员明细'
       }
     },
       {

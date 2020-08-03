@@ -4,7 +4,7 @@
         <a-menu
           mode="inline" theme="dark"
           :default-selected-keys="['1']"
-          :default-open-keys="['sub1']"
+          :default-open-keys="['sub1','sub2','sub3']"
           :style="{ height: '100%', borderRight: 0 }"
         >
           <a-sub-menu key="sub1">
@@ -19,6 +19,13 @@
             <span slot="title"><a-icon type="laptop" />处 方</span>
             <a-menu-item key="5">
               <router-link to="/Cf">处方明细 </router-link>
+            </a-menu-item>
+
+          </a-sub-menu>
+          <a-sub-menu key="sub3">
+            <span slot="title"><a-icon type="user" />人 员</span>
+            <a-menu-item key="6">
+              <router-link to="/Employee">职员明细</router-link>
             </a-menu-item>
 
           </a-sub-menu>

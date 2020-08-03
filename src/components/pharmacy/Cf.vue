@@ -128,11 +128,11 @@ import CfheadColumn from '../../DefColumn/CfheadColumn'
               {name:'totalprice',label:'处方金额',groupFn(item){
                 let price = item.totalprice;
                 if(price <=50){
-                  return '<=50元'
+                  return '0-50元'
                 }else if(price >50 && price <=100){
-                  return '50至100元'
+                  return '50-100元'
                 }else{
-                  return '>100元'
+                  return '100元以上'
                 }
               }},
 
