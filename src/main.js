@@ -9,8 +9,11 @@ import _ from 'lodash'
 import Moment from 'moment'
 import 'moment/locale/zh-cn';
 import Antd from 'ant-design-vue';
-import 'ant-design-vue/dist/antd.css';
+import 'ant-design-vue/dist/antd.less'
+// import "antd-theme/src/theme/index.js"
+// import  '@ant-design/dark-theme/index.less';
 import zh_CN from 'ant-design-vue/lib/locale-provider/zh_CN';
+// import './assets/index.less'
 //axios.defaults.baseURL = '/api'
 Vue.use(VueAxios,axios)
 Vue.prototype.$accounting = accounting;

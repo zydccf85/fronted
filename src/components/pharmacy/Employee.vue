@@ -10,7 +10,6 @@
           <a-auto-complete
           v-model="value"
          :data-source="dataSource"
-         style="width: 200px"
          placeholder=""
          @search="" allowClear backfill @select=""
         >
@@ -30,13 +29,13 @@
 
 
       </a-page-header>
-       <a-modal v-model="visible"  title="Modal" ok-text="确认" cancel-text="取消" @ok="visible=!visible" :width="600">
+       <a-modal v-model="visible"  title="职员明细" ok-text="确认" cancel-text="取消" @ok="visible=!visible" :width="600">
          <div>
           <a-form-model  :model="form" >
-                <a-form-model-item :label="getTitle(k)" :label-col="{span:4}" :wrapper-col="{span:18}"
+                <a-form-model-item :label="mymap[k]" :label-col="{span:4}" :wrapper-col="{span:18}"
                                    style="margin:0" v-for="(item,k,index) in form" :key="index">
-              <a-input placeholder="input placeholder"
-                       v-model="item==null?'':item"  size="small"/>
+              <a-input placeholder=""
+                       v-model="item==null?'':item"  size="small" :disabled="index==0"/>
             </a-form-model-item>
 
           </a-form-model>
@@ -57,40 +56,43 @@
             tableData:[],
             selectedRow:null,
             visible:false,
-            form:{}
+            form:{},
+            mymap:{id:'编号'}
           }
         },
       mounted(){
           this.fetch();
+
+         this.columns.forEach(item=>{
+           this.mymap[item.key.toLowerCase()]=item.title;
+         })
       },
       methods:{
           fetch(){
             this.axios.get("/springDemo/employee/getEmployee.do")
               .then(response=>this.tableData=response.data)
           },
-        getTitle(k){
-            this.$message.info(k)
-          return k;
-            return this.columns.filter(item=>item.dataIndex.toLowerCase()==k)[0];
-        },
+
         view(event){
             let text = event.target.innerText;
-               this.visible = true;
+
             switch(text) {
               case '查看':
                this.form = this._.clone(this.selectedRow)
-                console.log(form)
                   break;
                case '新增':
+                 let temp =this._.clone(this.selectedRow);
+                 for(let i in temp){
+                   temp[i]=''
+                 }
+                 this.form=temp;
                   break;
                 case '修改':
                   break;
               case '删除':
                   break;
-
-
-
           }
+          this.visible = true;
         }
       },
       computed: {
@@ -118,5 +120,6 @@
 </script>
 
 <style scoped>
+
 
 </style>

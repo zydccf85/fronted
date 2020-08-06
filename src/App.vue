@@ -46,22 +46,15 @@ export default {
 </script>
 
 <style scoped >
-#app {
-  font-family: '微软雅黑','Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
 #layout-top .logo{
   width: 300px;
   height: 31px;
   /*background: rgba(255, 255, 255, 0.2);*/
+  color:whitesmoke;
   margin: 16px 28px 16px 0;
   float: left;
   line-height: 31px;
-  color:wheat;
   text-align: center;
 }
 

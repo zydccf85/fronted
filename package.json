@@ -14,6 +14,8 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "@ant-design/aliyun-theme": "0.0.4",
+    "@ant-design/dark-theme": "^2.0.2",
     "accounting": "^0.4.1",
     "ant-design-vue": "^1.6.3",
     "axios": "^0.19.2",

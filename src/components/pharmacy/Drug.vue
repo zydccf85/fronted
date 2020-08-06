@@ -25,7 +25,7 @@
         </template>
 
       <a-table :columns="columns" :data-source="filterData" ref="mytable" bordered  size="small" rowKey="code"
-               :pagination="pagination" @change="handleTableChange"  :scroll="{y:350}">
+               :pagination="pagination" @change="handleTableChange"  >
       </a-table>
       </a-page-header>
 

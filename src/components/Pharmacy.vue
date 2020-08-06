@@ -1,6 +1,6 @@
 <template>
   <a-layout>
-      <a-layout-sider width="200" style="background: #fff;height:550px">
+      <a-layout-sider width="200" style="height:550px">
         <a-menu
           mode="inline" theme="dark"
           :default-selected-keys="['1']"
@@ -34,7 +34,7 @@
       </a-layout-sider>
       <a-layout style="padding: 0 12px 6px;border:1px solid white;">
         <a-layout-content
-          :style="{ background: '#FFFFE0', padding: '12px', margin: 0, minHeight: '350px' }"
+          :style="{  padding: '12px', margin: 0, minHeight: '350px' }"
         >
           <router-view/>
         </a-layout-content>
@@ -129,7 +129,5 @@
 </script>
 
 <style scoped>
- .breadcrumb-item.active{
-    color:red;
-  }
+
 </style>
